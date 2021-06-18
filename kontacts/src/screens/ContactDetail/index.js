@@ -1,11 +1,14 @@
 import React from 'react';
 import {Text, View} from 'react-native';
+import Container from '../../components/common/Container';
 
 const ContactDetail = () => {
   return (
-    <View>
-      <Text>Hi from ContactDetail</Text>
-    </View>
+    <Container>
+      <View>
+        <Text>Hi from ContactDetail</Text>
+      </View>
+    </Container>
   );
 };
 
