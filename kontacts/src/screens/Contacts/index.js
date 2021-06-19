@@ -6,7 +6,7 @@ const Contacts = () => {
   return (
     <Container>
       <View>
-        <Text>Hi from contacts</Text>
+        <Text>Hi from piyush</Text>
       </View>
     </Container>
   );
