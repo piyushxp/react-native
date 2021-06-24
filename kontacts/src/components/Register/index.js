@@ -6,9 +6,9 @@ import Container from '../common/Container';
 import CustomButton from '../common/CustomButton';
 import Input from '../common/Input';
 import styles from './styles';
-import {REGISTER} from '../../constants/routeName';
+import {LOGIN} from '../../constants/routeName';
 
-const LoginComponent = () => {
+const RegisterComponent = () => {
   const [value, onChangeText] = useState('');
   const {navigate} = useNavigation();
 
@@ -20,13 +20,30 @@ const LoginComponent = () => {
       />
       <View>
         <Text style={styles.title}>Welcome to Kontacts</Text>
-        <Text style={styles.subTitle}>Login</Text>
+        <Text style={styles.subTitle}>Create an Account</Text>
 
         <View style={styles.form}>
           <Input
             onChangeText={text => onChangeText(text)}
+            label="First Name"
+            placeholder="Enter First Name"
+          />
+
+          <Input
+            onChangeText={text => onChangeText(text)}
+            label="Last Name"
+            placeholder="Enter Last Name"
+          />
+          <Input
+            onChangeText={text => onChangeText(text)}
             label="Username"
             placeholder="Enter Username"
+          />
+
+          <Input
+            onChangeText={text => onChangeText(text)}
+            label="Email"
+            placeholder="Enter Email"
           />
 
           <Input
@@ -42,13 +59,13 @@ const LoginComponent = () => {
 
       <CustomButton primary title="Submit" loading={false} disabled={false} />
       <View style={styles.createSection}>
-        <Text style={styles.infoText}>Need a new Account?</Text>
-        <TouchableOpacity onPress={() => navigate(REGISTER)}>
-          <Text style={styles.linkBtn}>Register</Text>
+        <Text style={styles.infoText}>Already have an Account?</Text>
+        <TouchableOpacity onPress={() => navigate(LOGIN)}>
+          <Text style={styles.linkBtn}>Login</Text>
         </TouchableOpacity>
       </View>
     </Container>
   );
 };
 
-export default LoginComponent;
+export default RegisterComponent;
