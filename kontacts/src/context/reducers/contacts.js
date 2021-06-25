@@ -1,7 +1,8 @@
 const contacts = (state, {type, payload}) => {
   switch (type) {
-    case 'GET_CONTACT':
+    case 'GET_CONTACTS':
       return state;
+
     default:
       return state;
   }
