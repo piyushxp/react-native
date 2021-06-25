@@ -1,17 +1,24 @@
 import React from 'react';
+import {useContext} from 'react';
 import {useState} from 'react';
 import RegisterComponent from '../../components/Signup';
 import envs from '../../config/env';
-import axiosInstance from '../../helpers/axiosInstance';
+import register from '../../context/actions/auth/register';
+import {GlobalContext} from '../../context/Provider';
+import http from '../../helpers/axiosInstance';
 
 const Register = () => {
   const [form, setForm] = useState({});
   const [errors, setErrors] = useState({});
-  const {DEV_BACKEND_URL} = envs;
-  console.log(DEV_BACKEND_URL);
+  const {
+    authDispatch,
+    authState: {error, loading, data},
+  } = useContext(GlobalContext);
+
+  // console.log('form ---> ', form);
 
   React.useEffect(
-    () => axiosInstance.get('/contacts').catch(err => console.log({err})),
+    () => http.get('/contacts').catch(err => console.log({err})),
     [],
   );
 
@@ -69,6 +76,14 @@ const Register = () => {
         return {...prev, password: 'Please add a password'};
       });
     }
+
+    if (
+      Object.values(form).length === 5 &&
+      Object.values(form).every(item => item.trim().length > 0) &&
+      Object.values(errors).every(item => !item)
+    ) {
+      register(form)(authDispatch);
+    }
   };
 
   return (
@@ -77,6 +92,8 @@ const Register = () => {
       onChange={onChange}
       form={form}
       errors={errors}
+      error={error}
+      loading={loading}
     />
   );
 };

@@ -9,7 +9,14 @@ import Input from '../../components/common/Input';
 import {LOGIN} from '../../constants/routeNames';
 import styles from './styles';
 
-const RegisterComponent = ({onSubmit, onChange, form, errors}) => {
+const RegisterComponent = ({
+  onSubmit,
+  onChange,
+  form,
+  error,
+  loading,
+  errors,
+}) => {
   const {navigate} = useNavigation();
   return (
     <Container>
@@ -75,7 +82,13 @@ const RegisterComponent = ({onSubmit, onChange, form, errors}) => {
             }}
           />
 
-          <CustomButton onPress={onSubmit} primary title="Submit" />
+          <CustomButton
+            loading={loading}
+            onPress={onSubmit}
+            disabled={loading}
+            primary
+            title="Submit"
+          />
 
           <View style={styles.createSection}>
             <Text style={styles.infoText}>Already have an account?</Text>
