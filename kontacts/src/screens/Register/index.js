@@ -1,13 +1,12 @@
-import React from 'react';
-import {useContext} from 'react';
-import {useState} from 'react';
+import {useFocusEffect, useNavigation} from '@react-navigation/native';
+import React, {useContext, useState} from 'react';
 import RegisterComponent from '../../components/Signup';
-import envs from '../../config/env';
-import register from '../../context/actions/auth/register';
+import {LOGIN} from '../../constants/routeNames';
+import register, {clearAuthState} from '../../context/actions/auth/register';
 import {GlobalContext} from '../../context/Provider';
-import http from '../../helpers/axiosInstance';
 
 const Register = () => {
+  const {navigate} = useNavigation();
   const [form, setForm] = useState({});
   const [errors, setErrors] = useState({});
   const {
@@ -17,14 +16,22 @@ const Register = () => {
 
   // console.log('form ---> ', form);
 
-  React.useEffect(
-    () => http.get('/contacts').catch(err => console.log({err})),
-    [],
+  React.useEffect(() => {
+    if (data) {
+      navigate(LOGIN);
+    }
+  }, [data]);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      if (data) {
+        clearAuthState()(authDispatch);
+      }
+    }, [data]),
   );
 
   const onChange = ({name, value}) => {
     setForm({...form, [name]: value});
-
     if (value !== '') {
       if (name === 'password') {
         if (value.length < 6) {

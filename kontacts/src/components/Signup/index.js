@@ -32,11 +32,12 @@ const RegisterComponent = ({
         <Text style={styles.subTitle}>Register</Text>
 
         <View style={styles.form}>
+          {/* {error?.error && <Text>{error.error}</Text>} */}
           <Input
             label="Username"
             iconPosition="right"
             placeholder="Enter Username"
-            error={errors.userName}
+            error={errors.userName || error?.username?.[0]}
             onChangeText={value => {
               onChange({name: 'userName', value});
             }}
@@ -49,13 +50,13 @@ const RegisterComponent = ({
             onChangeText={value => {
               onChange({name: 'firstName', value});
             }}
-            error={errors.firstName}
+            error={errors.firstName || error?.firstName?.[0]}
           />
           <Input
             label="Last Name"
             iconPosition="right"
             placeholder="Enter Last name"
-            error={errors.lastName}
+            error={errors.lastName || error?.lastName?.[0]}
             onChangeText={value => {
               onChange({name: 'lastName', value});
             }}
@@ -64,7 +65,7 @@ const RegisterComponent = ({
             label="Email"
             iconPosition="right"
             placeholder="Enter Email"
-            error={errors.email}
+            error={errors.email || error?.email?.[0]}
             onChangeText={value => {
               onChange({name: 'email', value});
             }}
@@ -76,7 +77,7 @@ const RegisterComponent = ({
             secureTextEntry={true}
             icon={<Text>Show</Text>}
             iconPosition="right"
-            error={errors.password}
+            error={errors.password || error?.password?.[0]}
             onChangeText={value => {
               onChange({name: 'password', value});
             }}

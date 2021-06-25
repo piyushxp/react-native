@@ -1,13 +1,15 @@
 import {
+  REGISTER_FAIL,
   REGISTER_LOADING,
   REGISTER_SUCCESS,
+  CLEAR_AUTH_STATE,
 } from '../../../constants/actionTypes';
 import axiosInstance from '../../../helpers/axiosInstance';
 
 export default ({
     email,
     password,
-    username,
+    userName: username,
     firstName: first_name,
     lastName: last_name,
   }) =>
@@ -30,10 +32,19 @@ export default ({
       })
       .catch(err => {
         //failed api --> dispacth error
+        console.log('reg-action-fail --> ', err);
+
         dispatch({
-          type: REGISTER_SUCCESS,
-          payload: err.response ? err.response.data : {error: 'Someting'},
+          type: REGISTER_FAIL,
+          payload: err.response
+            ? err.response.data
+            : {error: 'Someting went wrong'},
         });
-        console.log('reg-action --> ', err);
       });
   };
+
+export const clearAuthState = () => dispatch => {
+  dispatch({
+    type: CLEAR_AUTH_STATE,
+  });
+};
