@@ -2,11 +2,18 @@ import React from 'react';
 import {useState} from 'react';
 import RegisterComponent from '../../components/Signup';
 import envs from '../../config/env';
+import axiosInstance from '../../helpers/axiosInstance';
 
 const Register = () => {
   const [form, setForm] = useState({});
   const [errors, setErrors] = useState({});
   const {DEV_BACKEND_URL} = envs;
+  console.log(DEV_BACKEND_URL);
+
+  React.useEffect(
+    () => axiosInstance.get('/contacts').catch(err => console.log({err})),
+    [],
+  );
 
   const onChange = ({name, value}) => {
     setForm({...form, [name]: value});
