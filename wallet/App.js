@@ -3,6 +3,7 @@ import {ScrollView} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {NavigationContainer, DefaultTheme} from '@react-navigation/native';
 import {SignUp} from './screens/SignUp';
+import Tabs from './navigation/tabs';
 
 const theme = {
   ...DefaultTheme,
@@ -23,6 +24,7 @@ const App = () => {
         }}
         initialRouteName={'SignUp'}>
         <Stack.Screen name="SignUp" component={SignUp} />
+        <Stack.Screen name="Home" component={Tabs} />
       </Stack.Navigator>
     </NavigationContainer>
   );
