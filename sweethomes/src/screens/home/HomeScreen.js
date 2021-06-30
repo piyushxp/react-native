@@ -1,23 +1,23 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
-  View,
-  Text,
   Image,
-  StyleSheet,
-  StatusBar,
   SafeAreaView,
   ScrollView,
+  StatusBar,
+  Text,
+  View,
 } from 'react-native';
-import COLORS from '../consts/colors';
-import images from '../consts/images';
-import {FONTS, SIZES} from '../consts/theme';
+import {FlatList, TextInput} from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import {TextInput} from 'react-native-gesture-handler';
-import {useState} from 'react';
 import Pressable from 'react-native/Libraries/Components/Pressable/Pressable';
-import {categoryList, optionList} from '../consts/listData';
+import COLORS from '../../consts/colors';
+import houses from '../../consts/houses';
+import images from '../../consts/images';
+import {categoryList, optionList} from '../../consts/listData';
+import {SIZES} from '../../consts/theme';
+import styles from './styles';
 
-const HomeScreen = () => {
+const HomeScreen = ({navigation}) => {
   const ListCategories = () => {
     const [activeCategoryIndex, setActiveCategoryIndex] = useState(1);
 
@@ -48,6 +48,57 @@ const HomeScreen = () => {
           </View>
         ))}
       </View>
+    );
+  };
+
+  const Card = ({house}) => {
+    return (
+      <Pressable onPress={() => navigation.navigate('DetailsScreen', house)}>
+        <View style={styles.card}>
+          <Image source={house.image} style={styles.cardImage} />
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              marginTop: 10,
+            }}>
+            <Text style={{fontSize: SIZES.body4, fontWeight: 'bold'}}>
+              {house.title}
+            </Text>
+
+            <Text
+              style={{
+                fontSize: SIZES.body4,
+                fontWeight: 'bold',
+                color: COLORS.blue,
+              }}>
+              {'$19000'}
+            </Text>
+          </View>
+
+          <Text
+            style={{color: COLORS.grey, fontSize: SIZES.body5, marginTop: 5}}>
+            {house.location}
+          </Text>
+
+          <View style={styles.cardIcons}>
+            <View style={styles.facility}>
+              <Icon name="hotel" size={18}></Icon>
+              <Text style={styles.facilityText}>3</Text>
+            </View>
+
+            <View style={styles.facility}>
+              <Icon name="bathtub" size={18}></Icon>
+              <Text style={styles.facilityText}>1</Text>
+            </View>
+
+            <View style={styles.facility}>
+              <Icon name="aspect-ratio" size={18}></Icon>
+              <Text style={styles.facilityText}>300</Text>
+            </View>
+          </View>
+        </View>
+      </Pressable>
     );
   };
 
@@ -92,95 +143,19 @@ const HomeScreen = () => {
 
         <ListOptions />
         <ListCategories />
+        <FlatList
+          contentContainerStyle={{
+            paddingLeft: SIZES.padding * 2,
+            paddingVertical: SIZES.padding * 2,
+          }}
+          showsHorizontalScrollIndicator={false}
+          horizontal
+          data={houses}
+          renderItem={({item}) => <Card house={item} />}
+        />
       </ScrollView>
     </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  header: {
-    paddingVertical: 20,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingHorizontal: 20,
-  },
-
-  profileImage: {
-    height: 50,
-    width: 50,
-    borderRadius: 25,
-  },
-
-  searchInputContainer: {
-    flex: 1,
-    height: 40,
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: COLORS.light,
-    paddingHorizontal: 20,
-    borderRadius: 10,
-  },
-
-  searchBtn: {
-    backgroundColor: COLORS.dark,
-    height: 40,
-    width: 40,
-    borderRadius: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginLeft: 10,
-  },
-
-  optionListContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginTop: 20,
-    paddingHorizontal: SIZES.padding * 2,
-  },
-
-  optionCard: {
-    height: 210,
-    width: SIZES.width / 2 - 30,
-    elevation: 15,
-    backgroundColor: COLORS.white,
-    alignItems: 'center',
-    borderRadius: 20,
-    paddingHorizontal: SIZES.padding,
-    paddingTop: SIZES.padding,
-  },
-
-  optionCardImage: {
-    borderRadius: 10,
-    height: 140,
-    width: '100%',
-  },
-
-  optionCardTitle: {
-    marginTop: 5,
-    fontSize: SIZES.body3,
-    fontWeight: 'bold',
-  },
-
-  categoryListContainer: {
-    marginTop: 40,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingHorizontal: 40,
-  },
-
-  categoryListText: {
-    fontSize: SIZES.body4,
-    fontWeight: 'bold',
-    paddingBottom: SIZES.padding / 2,
-    color: COLORS.grey,
-  },
-
-  activeCategoryListStyle: {
-    color: COLORS.dark,
-    borderBottomWidth: 1,
-    paddingBottom: 5,
-  },
-});
 
 export default HomeScreen;

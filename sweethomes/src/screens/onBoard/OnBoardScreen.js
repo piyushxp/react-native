@@ -8,9 +8,9 @@ import {
   StyleSheet,
   Pressable,
 } from 'react-native';
-import COLORS from '../consts/colors';
-import images from '../consts/images';
-import {SIZES} from '../consts/theme';
+import COLORS from '../../consts/colors';
+import images from '../../consts/images';
+import {SIZES} from '../../consts/theme';
 
 const OnBoardScreen = ({navigation}) => {
   return (
