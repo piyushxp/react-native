@@ -1,42 +1,45 @@
 import React from 'react';
-import {Text, View, TouchableOpacity, ActivityIndicator} from 'react-native';
+import {View, Text, TextInput, ActivityIndicator} from 'react-native';
+import {TouchableOpacity} from 'react-native-gesture-handler';
+import {color} from 'react-native-reanimated';
 import colors from '../../../assets/theme/colors';
 import styles from './styles';
 
 const CustomButton = ({
   title,
-  disabled,
   secondary,
   primary,
   danger,
+  disabled,
   loading,
   onPress,
-  ...props
 }) => {
   const getBgColor = () => {
     if (disabled) {
-      return colors.gray;
+      return colors.grey;
     }
     if (primary) {
       return colors.primary;
+    }
+    if (danger) {
+      return colors.danger;
     }
 
     if (secondary) {
       return colors.secondary;
     }
-
-    if (danger) {
-      return colors.danger;
-    }
   };
-
   return (
     <TouchableOpacity
       disabled={disabled}
       onPress={onPress}
       style={[styles.wrapper, {backgroundColor: getBgColor()}]}>
       <View style={[styles.loaderSection]}>
-        {loading && <ActivityIndicator color={colors.primary} />}
+        {loading && (
+          <ActivityIndicator
+            color={primary ? colors.secondary : colors.primary}
+          />
+        )}
         {title && (
           <Text
             style={{

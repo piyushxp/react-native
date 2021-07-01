@@ -1,51 +1,57 @@
-import React from 'react';
-import {useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
-import {Text, View, Image, TouchableOpacity} from 'react-native';
-import Container from '../common/Container';
-import CustomButton from '../common/CustomButton';
-import Input from '../common/Input';
+import React from 'react';
+
+import {Image, Text, TextInput, View} from 'react-native';
+import {TouchableOpacity} from 'react-native-gesture-handler';
+import Container from '../../components/common/Container';
+import CustomButton from '../../components/common/CustomButton';
+import Input from '../../components/common/Input';
+import {REGISTER} from '../../constants/routeNames';
 import styles from './styles';
-import {REGISTER} from '../../constants/routeName';
 
 const LoginComponent = () => {
-  const [value, onChangeText] = useState('');
   const {navigate} = useNavigation();
-
   return (
     <Container>
       <Image
-        style={styles.logoImage}
+        height={70}
+        width={70}
         source={require('../../assets/images/logo.png')}
+        style={styles.logoImage}
       />
+
       <View>
-        <Text style={styles.title}>Welcome to RN-Contacts</Text>
-        <Text style={styles.subTitle}>Please Login Here</Text>
+        <Text style={styles.title}>Welcome to RNContacts</Text>
+        <Text style={styles.subTitle}>Please login here</Text>
 
         <View style={styles.form}>
           <Input
-            onChangeText={text => onChangeText(text)}
             label="Username"
+            iconPosition="right"
             placeholder="Enter Username"
+            // error={'This field is required'}
           />
 
           <Input
-            onChangeText={text => onChangeText(text)}
             label="Password"
+            placeholder="Enter Username"
             secureTextEntry={true}
-            placeholder="Enter Password"
-            icon={<Text>HIDE</Text>}
+            icon={<Text>Show</Text>}
             iconPosition="right"
           />
-        </View>
-      </View>
 
-      <CustomButton primary title="Submit" loading={false} disabled={false} />
-      <View style={styles.createSection}>
-        <Text style={styles.infoText}>Need a new Account?</Text>
-        <TouchableOpacity onPress={() => navigate(REGISTER)}>
-          <Text style={styles.linkBtn}>Register</Text>
-        </TouchableOpacity>
+          <CustomButton primary title="Submit" />
+
+          <View style={styles.createSection}>
+            <Text style={styles.infoText}>Need a new account?</Text>
+            <TouchableOpacity
+              onPress={() => {
+                navigate(REGISTER);
+              }}>
+              <Text style={styles.linkBtn}>Register</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
       </View>
     </Container>
   );
