@@ -7,22 +7,27 @@ import Container from '../../components/common/Container';
 import CustomButton from '../../components/common/CustomButton';
 import Input from '../../components/common/Input';
 import {REGISTER} from '../../constants/routeNames';
+import Message from '../common/Message';
 import styles from './styles';
 
 const LoginComponent = () => {
   const {navigate} = useNavigation();
   return (
     <Container>
-      <Image
-        height={70}
-        width={70}
-        source={require('../../assets/images/logo.png')}
-        style={styles.logoImage}
-      />
-
+      <View style={styles.logoText}>
+        <Text>Some logo</Text>
+      </View>
       <View>
         <Text style={styles.title}>Welcome to RNContacts</Text>
         <Text style={styles.subTitle}>Please login here</Text>
+
+        <Message
+          message="Errorororororor"
+          retry
+          retryFn={() => console.log('Hello There')}
+          danger
+          onDismiss={() => console.log('Removed')}
+        />
 
         <View style={styles.form}>
           <Input

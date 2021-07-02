@@ -5,14 +5,14 @@
  * @format
  * @flow strict-local
  */
-import {NavigationContainer} from '@react-navigation/native';
 import React from 'react';
-import {SafeAreaView, Text} from 'react-native';
 import 'react-native-gesture-handler';
+import env from './src/config/env';
 import GlobalProvider from './src/context/Provider';
 import AppNavContainer from './src/navigations';
 
 const App = () => {
+  console.log(env);
   return (
     <GlobalProvider>
       <AppNavContainer />
