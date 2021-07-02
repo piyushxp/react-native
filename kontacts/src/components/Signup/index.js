@@ -8,6 +8,7 @@ import CustomButton from '../../components/common/CustomButton';
 import Input from '../../components/common/Input';
 import {LOGIN} from '../../constants/routeNames';
 import styles from './styles';
+import Message from '../common/Message/index';
 
 const RegisterComponent = ({
   onSubmit,
@@ -20,19 +21,19 @@ const RegisterComponent = ({
   const {navigate} = useNavigation();
   return (
     <Container>
-      <Image
-        height={70}
-        width={70}
-        source={require('../../assets/images/logo.png')}
-        style={styles.logoImage}
-      />
-
       <View>
         <Text style={styles.title}>Welcome to Kontacts</Text>
         <Text style={styles.subTitle}>Register</Text>
 
         <View style={styles.form}>
-          {/* {error?.error && <Text>{error.error}</Text>} */}
+          {error?.error && (
+            <Message
+              retry
+              danger
+              retryFn={() => console.log('message')}
+              message={error.error}
+            />
+          )}
           <Input
             label="Username"
             iconPosition="right"

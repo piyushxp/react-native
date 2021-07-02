@@ -20,14 +20,20 @@ const Register = () => {
     if (data) {
       navigate(LOGIN);
     }
+
+    return () => console.log('unmount');
   }, [data]);
 
   useFocusEffect(
     React.useCallback(() => {
-      if (data) {
-        clearAuthState()(authDispatch);
-      }
-    }, [data]),
+      console.log('111111');
+
+      return () => {
+        if (data) {
+          clearAuthState()(authDispatch);
+        }
+      };
+    }, [data, error]),
   );
 
   const onChange = ({name, value}) => {
