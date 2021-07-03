@@ -3,6 +3,7 @@ import React from 'react';
 
 import {Image, Text, TextInput, View} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+import {onChange} from 'react-native-reanimated';
 import Container from '../../components/common/Container';
 import CustomButton from '../../components/common/CustomButton';
 import Input from '../../components/common/Input';
@@ -10,7 +11,7 @@ import {REGISTER} from '../../constants/routeNames';
 import Message from '../common/Message';
 import styles from './styles';
 
-const LoginComponent = () => {
+const LoginComponent = ({onSubmit, onChange, form}) => {
   const {navigate} = useNavigation();
   return (
     <Container>
@@ -18,7 +19,7 @@ const LoginComponent = () => {
         <Text>Some logo</Text>
       </View>
       <View>
-        <Text style={styles.title}>Welcome to RNContacts</Text>
+        <Text style={styles.title}>Welcome to Kontacts</Text>
         <Text style={styles.subTitle}>Please login here</Text>
 
         <Message
@@ -34,6 +35,9 @@ const LoginComponent = () => {
             label="Username"
             iconPosition="right"
             placeholder="Enter Username"
+            onChangeText={value => {
+              onChange({name: 'userName', value});
+            }}
             // error={'This field is required'}
           />
 
@@ -43,9 +47,12 @@ const LoginComponent = () => {
             secureTextEntry={true}
             icon={<Text>Show</Text>}
             iconPosition="right"
+            onChangeText={value => {
+              onChange({name: 'password', value});
+            }}
           />
 
-          <CustomButton primary title="Submit" />
+          <CustomButton primary title="Submit" onPress={onSubmit} />
 
           <View style={styles.createSection}>
             <Text style={styles.infoText}>Need a new account?</Text>

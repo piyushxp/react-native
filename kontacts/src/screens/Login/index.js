@@ -1,13 +1,20 @@
-import {useNavigation} from '@react-navigation/native';
-import React from 'react';
+import React, {useContext} from 'react';
 import LoginComponent from '../../components/Login';
+import loginUser from '../../context/actions/auth/loginUser';
+import {GlobalContext} from '../../context/Provider';
+
 const Login = () => {
   const [form, setForm] = React.useState({});
-
-  const {navigate} = useNavigation();
+  const [errors, setErrors] = React.useState({});
+  const {
+    authDispatch,
+    authState: {error, loading, data},
+  } = useContext(GlobalContext);
 
   const onSubmit = () => {
-    if (form.username && form.password) {
+    if (form.userName && form.password) {
+      console.log('login submit btn ==>');
+      loginUser(form)(authDispatch);
     }
   };
 
