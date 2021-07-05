@@ -8,7 +8,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {ActivityIndicator, Text} from 'react-native';
 
 const AppNavContainer = () => {
-  const [isAuthenticated, setIsAuthenticated] = React.useState(false);
+  const [isAuthenticated, setIsAuthenticated] = React.useState(isLoggedIn);
   const [authLoaded, setAuthLoaded] = React.useState(false); //to keep a check on authentication
 
   const {
@@ -42,11 +42,7 @@ const AppNavContainer = () => {
     <>
       {authLoaded ? (
         <NavigationContainer>
-          {isLoggedIn || isAuthenticated ? (
-            <DrawerNavigator />
-          ) : (
-            <AuthNavigator />
-          )}
+          {isAuthenticated ? <DrawerNavigator /> : <AuthNavigator />}
         </NavigationContainer>
       ) : (
         <ActivityIndicator />

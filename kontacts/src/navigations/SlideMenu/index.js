@@ -3,13 +3,28 @@ import {
   Text,
   View,
   SafeAreaView,
+  Alert,
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
 import Container from '../../components/common/Container';
 import {HOME_NAVIGATOR, SETTINGS} from '../../constants/routeNames';
+import logoutUser from '../../context/actions/auth/logoutUser';
 
-const SlideMenu = ({navigation}) => {
+const SlideMenu = ({navigation, authDispatch}) => {
+  const handleLogout = () => {
+    navigation.toggleDrawer();
+    Alert.alert('Logout', 'Are you sure?', [
+      {text: 'Cancel', onPress: () => {}},
+      {
+        text: 'Ok',
+        onPress: () => {
+          logoutUser()(authDispatch);
+        },
+      },
+    ]);
+  };
+
   const menuItems = [
     {
       icon: <Text>H</Text>,
@@ -28,16 +43,14 @@ const SlideMenu = ({navigation}) => {
     {
       icon: <Text>L</Text>,
       name: 'Logout',
-      onPress: () => {
-        console.log('logout');
-      },
+      onPress: handleLogout,
     },
   ];
   return (
     <SafeAreaView>
       <Container>
         <View style={styles.logoImageWrap}>
-          <Text>Some Logo Image</Text>
+          <Text>Logo Image</Text>
         </View>
 
         <View>
