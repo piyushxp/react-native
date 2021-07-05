@@ -1,9 +1,7 @@
 import {useNavigation} from '@react-navigation/native';
-import React from 'react';
-
-import {Image, Text, TextInput, View} from 'react-native';
+import React, {useState} from 'react';
+import {Text, View} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-import {onChange} from 'react-native-reanimated';
 import Container from '../../components/common/Container';
 import CustomButton from '../../components/common/CustomButton';
 import Input from '../../components/common/Input';
@@ -13,6 +11,7 @@ import styles from './styles';
 
 const LoginComponent = ({onSubmit, onChange, form}) => {
   const {navigate} = useNavigation();
+  const [isSecureEntry, setIsSecureEntry] = useState(true);
   return (
     <Container>
       <View style={styles.logoText}>
@@ -44,8 +43,13 @@ const LoginComponent = ({onSubmit, onChange, form}) => {
           <Input
             label="Password"
             placeholder="Enter Username"
-            secureTextEntry={true}
-            icon={<Text>Show</Text>}
+            secureTextEntry={isSecureEntry}
+            icon={
+              <TouchableOpacity
+                onPress={() => setIsSecureEntry(!isSecureEntry)}>
+                <Text>{isSecureEntry ? 'Show' : 'Hide'}</Text>
+              </TouchableOpacity>
+            }
             iconPosition="right"
             onChangeText={value => {
               onChange({name: 'password', value});

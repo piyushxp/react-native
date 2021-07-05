@@ -21,7 +21,7 @@ const Register = () => {
       navigate(LOGIN);
     }
 
-    return () => console.log('unmount');
+    return () => console.log('reg com. unmount');
   }, [data]);
 
   useFocusEffect(

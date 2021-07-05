@@ -5,6 +5,7 @@ import {GlobalContext} from '../../context/Provider';
 
 const Login = () => {
   const [form, setForm] = React.useState({});
+
   const [errors, setErrors] = React.useState({});
   const {
     authDispatch,
