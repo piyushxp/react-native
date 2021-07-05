@@ -8,6 +8,7 @@
 
 import {LogBox} from 'react-native';
 LogBox.ignoreLogs(['Reanimated 2']);
+
 import React from 'react';
 import 'react-native-gesture-handler';
 // import env from './src/config/env';

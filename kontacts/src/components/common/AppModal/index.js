@@ -15,16 +15,26 @@ const AppModal = ({
   setModalVisible,
   modalBody,
   modalFooter,
+  closeOnTouchOutside,
 }) => {
   return (
     <Modal visible={modalVisible} transparent>
       <TouchableOpacity
-        onPress={() => setModalVisible(false)}
+        onPress={() => {
+          if (closeOnTouchOutside) {
+            setModalVisible(false);
+          }
+        }}
         style={styles.wrapper}>
         <View style={styles.modalView}>
           <ScrollView>
             <View style={styles.header}>
-              <Text>X</Text>
+              <TouchableOpacity
+                onPress={() => {
+                  setModalVisible(false);
+                }}>
+                <Text>X</Text>
+              </TouchableOpacity>
               <Text style={styles.title}>{title}</Text>
 
               <View />
