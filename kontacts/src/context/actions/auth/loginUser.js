@@ -19,7 +19,7 @@ export default ({password, userName: username}) =>
       .then(res => {
         console.log(res.data);
         AsyncStorage.setItem('token', res.data.token);
-        AsyncStorage.setItem('user', JSON.stringify(res.data.user));
+        AsyncStorage.setItem('user', res.data.user.username);
 
         dispatch({
           type: LOGIN_SUCCESS,
