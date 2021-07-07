@@ -41,13 +41,13 @@ const ContactsComponent = ({modalVisible, data, loading, setModalVisible}) => {
               }}></View>
           )}
 
-          <View style={{flexDirection: 'row', paddingRight: 10}}>
-            <Text>{first_name}</Text>
-
-            <Text>{last_name}</Text>
+          <View style={{paddingLeft: 20}}>
+            <View style={{flexDirection: 'row', paddingRight: 10}}>
+              <Text style={styles.name}>{first_name}</Text>
+              <Text style={styles.name}>{last_name}</Text>
+            </View>
+            <Text style={styles.phoneNumber}>{phone_number}</Text>
           </View>
-
-          <Text>{phone_number}</Text>
         </View>
         <Icon type="right"></Icon>
       </TouchableOpacity>
