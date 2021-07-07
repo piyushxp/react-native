@@ -1,11 +1,11 @@
-import React, {useContext} from 'react';
-import {NavigationContainer} from '@react-navigation/native';
-import AuthNavigator from './AuthNavigator';
-import DrawerNavigator from './DrawerNavigator';
-import {GlobalContext} from '../context/Provider';
-import {useEffect} from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {ActivityIndicator, Text} from 'react-native';
+import React, {useContext} from "react";
+import {NavigationContainer} from "@react-navigation/native";
+import AuthNavigator from "./AuthNavigator";
+import DrawerNavigator from "./DrawerNavigator";
+import {GlobalContext} from "../context/Provider";
+import {useEffect} from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import {ActivityIndicator, Text} from "react-native";
 
 const AppNavContainer = () => {
   const [isAuthenticated, setIsAuthenticated] = React.useState(isLoggedIn);
@@ -22,7 +22,7 @@ const AppNavContainer = () => {
   const getUser = async () => {
     try {
       // console.log('getUser try block');
-      const user = await AsyncStorage.getItem('user');
+      const user = await AsyncStorage.getItem("user");
       if (user) {
         setAuthLoaded(true);
         setIsAuthenticated(true);
@@ -35,8 +35,17 @@ const AppNavContainer = () => {
     }
   };
 
-  console.log('authLoaded :>> ', authLoaded);
-  console.log('isLoggedIn :>> ', isLoggedIn);
+  // const getTokenAync = async () => {
+  //   const token = await AsyncStorage.getItem("token");
+  //   if (token) {
+  //     return token;
+  //   } else {
+  //     return "no token found";
+  //   }
+  // };
+
+  console.log("authLoaded :>> ", authLoaded);
+  console.log("isLoggedIn :>> ", isLoggedIn);
 
   return (
     <>
