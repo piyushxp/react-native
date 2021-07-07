@@ -12,6 +12,7 @@ import colors from '../../assets/theme/colors';
 import AppModal from '../common/AppModal/index';
 import CustomButton from '../common/CustomButton/index';
 import Message from '../common/Message';
+import Icon from 'react-native-vector-icons/AntDesign';
 
 const ContactsComponent = ({modalVisible, data, loading, setModalVisible}) => {
   const ListEmptyComponent = () => (
@@ -48,7 +49,7 @@ const ContactsComponent = ({modalVisible, data, loading, setModalVisible}) => {
 
           <Text>{phone_number}</Text>
         </View>
-        <Text style={{fontSize: 22}}> ⇛ </Text>
+        <Icon type="right"></Icon>
       </TouchableOpacity>
     );
   };
