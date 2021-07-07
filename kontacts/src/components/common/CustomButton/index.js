@@ -1,9 +1,9 @@
-import React from 'react';
-import {View, Text, TextInput, ActivityIndicator} from 'react-native';
-import {TouchableOpacity} from 'react-native-gesture-handler';
-import {color} from 'react-native-reanimated';
-import colors from '../../../assets/theme/colors';
-import styles from './styles';
+import React from "react";
+import {View, Text, TextInput, ActivityIndicator} from "react-native";
+import {TouchableOpacity} from "react-native-gesture-handler";
+import {color} from "react-native-reanimated";
+import colors from "../../../assets/theme/colors";
+import styles from "./styles";
 
 const CustomButton = ({
   title,
@@ -43,10 +43,10 @@ const CustomButton = ({
         {title && (
           <Text
             style={{
-              color: disabled ? 'black' : colors.white,
+              color: disabled ? "black" : colors.white,
               paddingLeft: loading ? 5 : 0,
             }}>
-            {title}
+            {loading ? "Please Wait ... " : title}
           </Text>
         )}
       </View>

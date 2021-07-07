@@ -4,9 +4,12 @@ import {Text, View} from "react-native";
 import CreateContactComponent from "../../components/CreateContactComponent/index";
 import createContacts from "../../context/actions/createContacts";
 import {GlobalContext} from "../../context/Provider";
+import {CONTACT_LIST} from "../../constants/routeNames";
+import {useNavigation} from "@react-navigation/native";
 
 const CreateContact = () => {
   const [form, setForm] = useState({});
+  const {navigate} = useNavigation();
   const {
     contactsDispatch,
     contactsState: {
@@ -19,7 +22,7 @@ const CreateContact = () => {
   };
 
   const onSubmit = () => {
-    createContacts(form)(contactsDispatch);
+    createContacts(form)(contactsDispatch)(navigate(CONTACT_LIST));
   };
 
   console.log(error);

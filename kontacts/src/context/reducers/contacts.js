@@ -63,11 +63,10 @@ const contacts = (state, {type, payload}) => {
 
         getContacts: {
           ...state,
-          getContacts: {
-            data: [payload, state.getContacts.data],
-            loading: false,
-            error: payload,
-          },
+          getContacts,
+          data: [payload, ...state.getContacts.data],
+          loading: false,
+          error: payload,
         },
       };
 

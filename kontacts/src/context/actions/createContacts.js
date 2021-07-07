@@ -5,14 +5,17 @@ import {
 } from "../../constants/actionTypes/index";
 import axiosInstance from "../../helpers/axiosInstance";
 
-export default form => dispatch => {
+export default form => dispatch => redirectOnSuccess => {
   console.log("form:>>", form);
+
   let requestPayload = {
     country_code: form.countryCode,
     first_name: form.firstName,
     last_name: form.lastName,
     phone_number: form.phoneNumber,
-    contact_picture: "https://i.pinimg.com/originals/4e/4a/b9/asasassas.jpg",
+    contact_picture:
+      form.contactPicture ||
+      "https://images.pexels.com/photos/1542085/pexels-photo-1542085.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
     is_favorite: true,
   };
 
@@ -25,12 +28,13 @@ export default form => dispatch => {
   axiosInstance
     .post("/contacts/", requestPayload)
     .then(res => {
-      console.log(res.data);
-
+      // console.log(res.data);
       dispatch({
         type: CREATE_CONTACTS_SUCCESS,
         payload: res.data,
       });
+
+      redirectOnSuccess();
     })
     .catch(err => {
       console.log("Err :>>", err);

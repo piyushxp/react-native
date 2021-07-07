@@ -52,6 +52,7 @@ const CreateContactComponent = ({
               }}
             />
           }
+          onChangeText={value => onChangeText({name: "phoneNumber", value})}
           iconPosition="left"
           style={{paddingLeft: 10}}
           label="Phone Number"
@@ -59,7 +60,13 @@ const CreateContactComponent = ({
           error={error?.phone_number?.[0]}
         />
 
-        <CustomButton onPress={onSubmit} primary title="Submit" />
+        <CustomButton
+          loading={loading}
+          disabled={loading}
+          onPress={onSubmit}
+          primary
+          title="Submit"
+        />
       </Container>
     </View>
   );
