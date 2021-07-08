@@ -5,10 +5,13 @@
  * @format
  * @flow strict-local
  */
-import {NavigationContainer} from '@react-navigation/native';
+
+import {LogBox} from 'react-native';
+LogBox.ignoreLogs(['Reanimated 2']);
+
 import React from 'react';
-import {SafeAreaView, Text} from 'react-native';
 import 'react-native-gesture-handler';
+// import env from './src/config/env';
 import GlobalProvider from './src/context/Provider';
 import AppNavContainer from './src/navigations';
 
