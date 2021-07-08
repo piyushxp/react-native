@@ -25,12 +25,20 @@ const CreateContact = () => {
     createContacts(form)(contactsDispatch)(navigate(CONTACT_LIST));
   };
 
-  console.log(error);
+  const toggleValueChange = () => {
+    setForm({
+      ...form,
+      isFavorite: !form.isFavorite,
+    });
+  };
+
+  // console.log(error);
 
   return (
     <View>
       <CreateContactComponent
         form={form}
+        toggleValueChange={toggleValueChange}
         setForm={setForm}
         onSubmit={onSubmit}
         onChangeText={onChangeText}

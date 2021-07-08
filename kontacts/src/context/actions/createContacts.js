@@ -16,7 +16,7 @@ export default form => dispatch => redirectOnSuccess => {
     contact_picture:
       form.contactPicture ||
       "https://images.pexels.com/photos/1542085/pexels-photo-1542085.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-    is_favorite: true,
+    is_favorite: form.isFavorite || false,
   };
 
   //loading
