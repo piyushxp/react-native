@@ -10,8 +10,10 @@ import {
 import React from 'react';
 import {COLORS, FONTS, icons, SIZES} from '../constants';
 import {categoryData, initialCurrentLocation, restaurantData} from '../data';
+import {useNavigation} from '@react-navigation/native';
 
 const Home = () => {
+  const {navigate} = useNavigation();
   const [categories, setCategories] = React.useState(categoryData);
   const [selectedCategory, setSelectedCategory] = React.useState(null);
   const [restaurants, setRestaurants] = React.useState(restaurantData);
@@ -148,9 +150,14 @@ const Home = () => {
     function renderItem({item}) {
       return (
         <TouchableOpacity
+          onPress={() =>
+            navigate('Restaurant', {
+              item,
+              currentLocation,
+            })
+          }
           style={{
             marginBottom: SIZES.padding * 2,
-            // onPress
           }}>
           <View style={{marginBottom: SIZES.padding}}>
             <Image
