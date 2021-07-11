@@ -10,6 +10,7 @@ import {
   FlatList,
   Animated,
 } from 'react-native';
+import {VictoryPie} from 'victory-native';
 import {icons} from '../constants';
 import {COLORS, FONTS, SIZES} from '../constants/theme';
 import {categoriesData} from '../data/data';
@@ -94,7 +95,7 @@ const Home = () => {
             borderRadius: 25,
           }}>
           <Image
-            source={icons.chart}
+            source={icons.menu}
             style={{
               height: 15,
               width: 15,
@@ -137,10 +138,7 @@ const Home = () => {
     );
 
     return (
-      <View
-        style={{
-          paddingHorizontal: SIZES.padding / 2,
-        }}>
+      <View style={{paddingHorizontal: SIZES.padding - 5}}>
         <Animated.View style={{height: categoryListHeightAnimationValue}}>
           <FlatList
             data={categories}
@@ -149,6 +147,7 @@ const Home = () => {
             numColumns={2}
           />
         </Animated.View>
+
         <TouchableOpacity
           onPress={() => {
             if (showMoreToggle) {
@@ -297,7 +296,7 @@ const Home = () => {
       </View>
     );
     return (
-      <View>
+      <>
         {renderIncomingExpenseTitle()}
 
         {incomingExpenses.length > 0 && (
@@ -320,6 +319,70 @@ const Home = () => {
             <Text>No Record</Text>
           </View>
         )}
+      </>
+    );
+  };
+
+  function processcategoryDataToDisplay() {
+    //fliter data with confirm status
+
+    let chartData = categories.map(item => {
+      let confirmExpenses = item.expenses.filter(a => a.status == 'C');
+      let total = confirmExpenses.reduce((a, b) => a + (b.total || 0), 0);
+
+      return {
+        name: item.name,
+        y: total,
+        expensesCount: confirmExpenses.length,
+        color: item.color,
+        id: item.id,
+      };
+    });
+
+    //Filter out categories with no data /expenses
+    let filterChartData = chartData.filter(a => a.y > 0);
+
+    //Calculate the total expenses
+    let totalExpense = filterChartData.reduce((a, b) => a + (b.y || 0), 0);
+
+    //Calculate the Precentage and repopulate chart data
+    let finalChartData = filterChartData.map(item => {
+      let percentage = ((item.y / totalExpense) * 100).toFixed(0);
+      return {
+        label: `${percentage}%`,
+        y: Number(item.y),
+        expenseCount: item.expensesCount,
+        color: item.color,
+        name: item.name,
+        id: item.id,
+      };
+    });
+    return finalChartData;
+  }
+
+  const renderChart = () => {
+    let chartData = processcategoryDataToDisplay();
+    let colorScales = chartData.map(item => item.color);
+    return (
+      <View style={{alignItems: 'center', justifyContent: 'center'}}>
+        <VictoryPie
+          data={chartData}
+          colorScale={colorScales}
+          labels={datum => `${datum.y}`}
+          radius={SIZES.width * 0.4 - 10}
+          innerRadius={70}
+          labelRadius={({innerRadius}) =>
+            (SIZES.width * 0.4 + innerRadius) / 2.5
+          }
+          style={{
+            labels: {fill: COLORS.white, ...FONTS.h3b},
+            parent: {
+              ...styles.shadow,
+            },
+          }}
+          width={SIZES.width * 0.8}
+          height={SIZES.width * 0.8}
+        />
       </View>
     );
   };
@@ -334,12 +397,16 @@ const Home = () => {
         contentContainerStyle={{
           paddingBottom: 30,
         }}>
-        {viewMode == 'list' ? (
+        {viewMode == 'list' && (
           <View>
             {renderCategoryList()}
             {renderIncomingExpenses()}
           </View>
-        ) : null}
+        )}
+
+        {viewMode == 'chart' && (
+          <View style={{backgroundColor: COLORS.white}}>{renderChart()}</View>
+        )}
       </ScrollView>
     </View>
   );
