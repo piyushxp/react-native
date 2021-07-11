@@ -1,10 +1,23 @@
 import React from 'react';
-import {StyleSheet, Text, TouchableOpacity, Image, View} from 'react-native';
+import {useRef} from 'react';
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  Image,
+  View,
+  ScrollView,
+  FlatList,
+  Animated,
+} from 'react-native';
 import {icons} from '../constants';
 import {COLORS, FONTS, SIZES} from '../constants/theme';
 import {categoriesData} from '../data/data';
 
 const Home = () => {
+  const categoryListHeightAnimationValue = useRef(
+    new Animated.Value(115),
+  ).current;
   const [categories, setCategories] = React.useState(categoriesData);
   const [viewMode, setViewMode] = React.useState('chart');
   const [selectedCategory, setSelectedCategory] = React.useState(null);
@@ -94,12 +107,99 @@ const Home = () => {
     </View>
   );
 
+  const renderCategoryList = () => {
+    const renderItem = ({item}) => (
+      <TouchableOpacity
+        onPress={() => setSelectedCategory(item)}
+        style={{
+          flex: 1,
+          flexDirection: 'row',
+          margin: 5,
+          paddingVertical: SIZES.radius,
+          paddingHorizontal: SIZES.padding,
+          borderRadius: 5,
+          backgroundColor: COLORS.white,
+          ...styles.shadow,
+        }}>
+        <Image
+          source={item.icon}
+          style={{
+            width: 20,
+            height: 20,
+            tintColor: item.color,
+          }}
+        />
+        <Text
+          style={{marginLeft: SIZES.base, color: COLORS.primary, ...FONTS.h4}}>
+          {item.name}
+        </Text>
+      </TouchableOpacity>
+    );
+
+    return (
+      <View
+        style={{
+          paddingHorizontal: SIZES.padding / 2,
+        }}>
+        <Animated.View style={{height: categoryListHeightAnimationValue}}>
+          <FlatList
+            data={categories}
+            renderItem={renderItem}
+            keyExtractor={item => `${item.id}`}
+            numColumns={2}
+          />
+        </Animated.View>
+        <TouchableOpacity
+          onPress={() => {
+            if (showMoreToggle) {
+              Animated.timing(categoryListHeightAnimationValue, {
+                toValue: 115,
+                duration: 300,
+                useNativeDriver: false,
+              }).start();
+            } else {
+              Animated.timing(categoryListHeightAnimationValue, {
+                toValue: 172.5,
+                duration: 300,
+                useNativeDriver: false,
+              }).start();
+            }
+            setShowMoreToggle(!showMoreToggle);
+          }}
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'center',
+            marginVertical: SIZES.base,
+          }}>
+          <Text style={{...FONTS.body4}}>
+            {showMoreToggle ? 'LESS' : ' MORE'}
+          </Text>
+          <Image
+            source={icons.down_arrow}
+            style={{
+              marginLeft: 5,
+              width: 15,
+              height: 15,
+              alignSelf: 'center',
+            }}
+          />
+        </TouchableOpacity>
+      </View>
+    );
+  };
+
   return (
     <View style={{flex: 1, backgroundColor: COLORS.lightGray}}>
       {/* NavbarSection */}
       {renderNavBar()}
       {renderHeader()}
       {renderCategoryHeaderSection()}
+      <ScrollView
+        contentContainerStyle={{
+          paddingBottom: 60,
+        }}>
+        {viewMode == 'list' ? <View>{renderCategoryList()}</View> : null}
+      </ScrollView>
     </View>
   );
 };
@@ -107,9 +207,19 @@ const Home = () => {
 export default Home;
 
 const styles = StyleSheet.create({
+  shadow: {
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 2,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 3,
+  },
   navbarContainer: {
     flexDirection: 'row',
-    height: 60,
+    height: 50,
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: SIZES.padding,
@@ -130,13 +240,13 @@ const styles = StyleSheet.create({
 
   headerContainer: {
     paddingHorizontal: SIZES.padding,
-    paddingVertical: SIZES.padding,
+    paddingVertical: SIZES.padding / 2,
     backgroundColor: COLORS.white,
   },
 
   headerText: {
     color: COLORS.primary,
-    ...FONTS.h2,
+    ...FONTS.h2b,
   },
 
   headerSubs: {
@@ -160,11 +270,11 @@ const styles = StyleSheet.create({
   },
 
   dateContainer: {
-    marginLeft: SIZES.padding * 0.5,
+    marginLeft: SIZES.padding,
   },
 
   dateText: {
-    ...FONTS.h3,
+    ...FONTS.h3b,
     color: COLORS.primary,
   },
   dateSubText: {
