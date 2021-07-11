@@ -188,6 +188,142 @@ const Home = () => {
     );
   };
 
+  const renderIncomingExpenses = () => {
+    let allExpenses = selectedCategory ? selectedCategory.expenses : [];
+
+    //filter according to Pending "P" or "C" confirm
+    let incomingExpenses = allExpenses.filter(a => a.status == 'P');
+
+    const renderIncomingExpenseTitle = () => (
+      <View
+        style={{
+          padding: SIZES.padding,
+          backgroundColor: COLORS.lightGray,
+        }}>
+        <Text style={{...FONTS.h3, color: COLORS.primary}}>
+          INCOMING EXPENSES
+        </Text>
+        <Text style={{...FONTS.body4, color: COLORS.darkgray}}>12 Total</Text>
+      </View>
+    );
+
+    const renderItem = ({item, index}) => (
+      <View
+        style={{
+          width: 300,
+          marginRight: SIZES.padding,
+          marginLeft: index == 0 ? SIZES.padding : 0,
+          marginVertical: SIZES.radius,
+          borderRadius: SIZES.radius,
+          backgroundColor: COLORS.white,
+          ...styles.shadow,
+        }}>
+        {/* Title */}
+        <View
+          style={{
+            flexDirection: 'row',
+            padding: SIZES.padding,
+            alignItems: 'center',
+          }}>
+          <View
+            style={{
+              height: 40,
+              width: 40,
+              borderRadius: 25,
+              backgroundColor: COLORS.lightGray,
+              alignItems: 'center',
+              justifyContent: 'center',
+              margin: SIZES.base,
+            }}>
+            <Image
+              source={selectedCategory.icon}
+              style={{height: 20, width: 20, tintColor: selectedCategory.color}}
+            />
+          </View>
+
+          <Text style={{...FONTS.h3b, color: selectedCategory.color}}>
+            {selectedCategory.name}
+          </Text>
+        </View>
+
+        {/* Expenses Description */}
+        <View style={{paddingHorizontal: SIZES.padding}}>
+          {/* TITLE AND DESCRIPTION */}
+          <Text style={{...FONTS.h2b}}>{item.title}</Text>
+          <Text style={{...FONTS.body3}}>{item.description}</Text>
+          {/* LOCATION */}
+          <View>
+            <Text style={{marginTop: SIZES.padding, ...FONTS.h4}}>
+              LOCATION
+            </Text>
+            <View
+              style={{
+                flexDirection: 'row',
+              }}>
+              <Image
+                source={icons.pin}
+                style={{
+                  width: 20,
+                  height: 20,
+                  tintColor: COLORS.darkgray,
+                  marginRight: 5,
+                }}
+              />
+              <Text
+                style={{
+                  marginBottom: SIZES.base,
+                  color: COLORS.darkgray,
+                  ...FONTS.body4,
+                }}>
+                {item.location}
+              </Text>
+            </View>
+          </View>
+        </View>
+        {/* PRICE */}
+        <View
+          style={{
+            height: 50,
+            alignItems: 'center',
+            justifyContent: 'center',
+            backgroundColor: selectedCategory.color,
+            borderBottomStartRadius: SIZES.radius,
+            borderBottomEndRadius: SIZES.radius,
+          }}>
+          <Text style={{color: COLORS.white}}>
+            CONFIRM {item.total.toFixed(2)} USD
+          </Text>
+        </View>
+      </View>
+    );
+    return (
+      <View>
+        {renderIncomingExpenseTitle()}
+
+        {incomingExpenses.length > 0 && (
+          <FlatList
+            data={incomingExpenses}
+            renderItem={renderItem}
+            keyExtractor={item => `${item.id}`}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+          />
+        )}
+
+        {incomingExpenses.length == 0 && (
+          <View
+            style={{
+              alignItems: 'center',
+              justifyContent: 'center',
+              height: 300,
+            }}>
+            <Text>No Record</Text>
+          </View>
+        )}
+      </View>
+    );
+  };
+
   return (
     <View style={{flex: 1, backgroundColor: COLORS.lightGray}}>
       {/* NavbarSection */}
@@ -196,9 +332,14 @@ const Home = () => {
       {renderCategoryHeaderSection()}
       <ScrollView
         contentContainerStyle={{
-          paddingBottom: 60,
+          paddingBottom: 30,
         }}>
-        {viewMode == 'list' ? <View>{renderCategoryList()}</View> : null}
+        {viewMode == 'list' ? (
+          <View>
+            {renderCategoryList()}
+            {renderIncomingExpenses()}
+          </View>
+        ) : null}
       </ScrollView>
     </View>
   );
