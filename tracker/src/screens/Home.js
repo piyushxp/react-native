@@ -291,7 +291,7 @@ const Home = () => {
             borderBottomEndRadius: SIZES.radius,
           }}>
           <Text style={{color: COLORS.white}}>
-            CONFIRM {item.total.toFixed(2)} USD
+            CONFIRM {item.total.toFixed(2)} INR
           </Text>
         </View>
       </View>
