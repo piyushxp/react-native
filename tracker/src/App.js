@@ -20,7 +20,7 @@ const App = () => {
   return (
     <NavigationContainer theme={theme}>
       <Stack.Navigator
-        Screenoptions={{
+        screenOptions={{
           headerShown: false,
         }}
         initialRouteName={'Home'}>
