@@ -16,13 +16,14 @@ import * as Yup from 'yup';
 import CustomInput from '../components/common/CustomInput/CustomInput';
 import CustomButton from '../components/common/CustomButton/CustomButton';
 
-const LoginScreen = () => {
+const SignupScreen = () => {
   const userInfo = {
     email: '',
     password: '',
   };
 
   const validationSchema = Yup.object({
+    fullname: Yup.string().required('Full name is required'),
     email: Yup.string().email('Email Invalid').required('Email is required'),
     password: Yup.string()
       .trim()
@@ -35,8 +36,8 @@ const LoginScreen = () => {
     <KeyboardAvoidingView behavior="position">
       <View style={styles.container}>
         <View style={styles.imageContainer}>
-          <Image source={delta} style={{width: 150, height: 150}} />
-          <Text style={styles.text}>Please Login</Text>
+          <Image source={delta} style={{width: 100, height: 100}} />
+          <Text style={styles.text}>Register Here</Text>
         </View>
         <View>
           <Formik
@@ -53,7 +54,7 @@ const LoginScreen = () => {
               }, 3000);
             }}>
             {({
-              values: {email, password},
+              values: {email, password, fullname},
               errors,
               touched,
               handleBlur,
@@ -63,6 +64,16 @@ const LoginScreen = () => {
             }) => {
               return (
                 <>
+                  <CustomInput
+                    label="Fullname"
+                    value={fullname}
+                    mode="outlined"
+                    onBlur={handleBlur('fullname')}
+                    onChangeText={handleChange('fullname')}
+                    name="fullname"
+                    error={errors}
+                  />
+
                   <CustomInput
                     label="Email"
                     value={email}
@@ -99,11 +110,11 @@ const LoginScreen = () => {
   );
 };
 
-export default LoginScreen;
+export default SignupScreen;
 
 const styles = StyleSheet.create({
   imageContainer: {
-    height: 300,
+    height: 200,
     alignItems: 'center',
     justifyContent: 'center',
   },

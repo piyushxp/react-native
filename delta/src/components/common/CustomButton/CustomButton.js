@@ -6,8 +6,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {Button} from 'react-native-paper';
-import {COLORS} from '../../assets/theme';
+import {COLORS} from '../../../assets/theme';
 
 const CustomButton = ({title, onPress, isSubmitting}) => {
   const backgroundColor = isSubmitting ? COLORS.secondary : COLORS.primary;
